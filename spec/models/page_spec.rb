@@ -9,6 +9,6 @@ RSpec.describe Page, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many :revisions }
+    it { is_expected.to have_many(:revisions).dependent(:destroy) }
   end
 end
