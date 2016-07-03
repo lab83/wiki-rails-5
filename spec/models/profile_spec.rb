@@ -9,6 +9,7 @@ RSpec.describe Profile, type: :model do
   end
 
   describe 'associations' do
+    it { is_expected.to have_many :revisions }
     it { is_expected.to have_one :user }
   end
 end
