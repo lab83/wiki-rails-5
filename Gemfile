@@ -23,9 +23,7 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1.1'
 end
 
-gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
 gem 'devise', '~> 4.2.0'
-gem 'draper', '~> 2.1.0'
 gem 'jquery-rails', '~> 4.1.1'
 gem 'pundit', '~> 1.1.0'
 gem 'sass-rails', '~> 5.0.5'
