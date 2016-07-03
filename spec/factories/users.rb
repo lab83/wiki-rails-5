@@ -7,6 +7,7 @@ FactoryGirl.define do
 
       factory :confirmed_user do
         confirmed_at Time.now
+        unconfirmed_email nil
       end
     end
   end

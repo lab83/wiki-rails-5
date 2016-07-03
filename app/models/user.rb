@@ -7,12 +7,12 @@ class User < ApplicationRecord
 
   belongs_to :profile, optional: true
 
-  after_create :create_or_link_profile
+  after_save :create_or_link_profile
 
   private
 
   def create_or_link_profile
-    if self.confirmed_at.present?
+    if self.confirmed? && self.unconfirmed_email.blank?
       existing_profile = Profile.where(email: self.email).first
       if existing_profile
         self.profile = existing_profile
