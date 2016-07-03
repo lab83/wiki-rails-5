@@ -31,32 +31,73 @@ RSpec.describe User, type: :model do
 
   describe 'callbacks' do
     context 'creating a new user' do
+      before do
+        @user = FactoryGirl.build :valid_user, email: 'user@example.com'
+      end
+
       context "a profile with the user's email already exists" do
         before do
-          @user = FactoryGirl.build :valid_user, email: 'user@example.com'
           @profile = FactoryGirl.create :valid_profile, email: 'user@example.com'
-          @user.save
-          @user.reload
-        end
-
-        it 'links the user to the existing profile' do
-          expect(@user.profile).to eq @profile
         end
 
         it "does not create another profile with the user's email" do
+          @user.save
+          @user.reload
           expect(Profile.where(email: @user.email).count).to eq 1
+        end
+
+        context "new user's email is confirmed" do
+          before do
+            @user.confirmed_at = Time.now
+            @user.save
+            @user.reload
+          end
+
+          it 'links the user to the existing profile' do
+            expect(@user.profile).to eq @profile
+          end
+        end
+
+        context "new user's email is not confirmed" do
+          before do
+            @user.confirmed_at = nil
+            @user.save
+            @user.reload
+          end
+
+          it 'does not link the user to the existing profile' do
+            expect(@user.profile).to eq nil
+          end
         end
       end
 
       context "a profile with the user's email does not already exist" do
         before do
-          @user = FactoryGirl.build :valid_user, email: 'user@example.com'
-          @user.save
-          @user.reload
+          Profile.destroy_all
+        end
+        
+        context "new user's email is confirmed" do
+          before do
+            @user.confirmed_at = Time.now
+            @user.save
+            @user.reload
+          end
+
+          it "creates a new linked profile with the user's email" do
+            expect(@user.profile.email).to eq @user.email
+          end
         end
 
-        it "creates a new linked profile with the user's email" do
-          expect(@user.profile.email).to eq @user.email
+        context "new user's email is not confirmed" do
+          before do
+            @user.confirmed_at = nil
+            @user.save
+            @user.reload
+          end
+
+          it "does not create a new linked profile with the user's email" do
+            expect(Profile.where(email: @user.email).count).to eq 0
+          end
         end
       end
     end
