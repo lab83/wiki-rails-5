@@ -26,6 +26,12 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to :profile }
+    it { is_expected.to belong_to(:profile) }
+
+    it 'creates a user with no profile' do
+      user = FactoryGirl.create(:registered_user)
+      user.save
+      expect(User.count).to eq 1
+    end
   end
 end
