@@ -27,11 +27,38 @@ RSpec.describe User, type: :model do
 
   describe 'associations' do
     it { is_expected.to belong_to(:profile) }
+  end
 
-    it 'creates a user with no profile' do
-      user = FactoryGirl.create(:registered_user)
-      user.save
-      expect(User.count).to eq 1
+  describe 'callbacks' do
+    context 'creating a new user' do
+      context "a profile with the user's email already exists" do
+        before do
+          @user = FactoryGirl.build :valid_user, email: 'user@example.com'
+          @profile = FactoryGirl.create :valid_profile, email: 'user@example.com'
+          @user.save
+          @user.reload
+        end
+
+        it 'links the user to the existing profile' do
+          expect(@user.profile).to eq @profile
+        end
+
+        it "does not create another profile with the user's email" do
+          expect(Profile.where(email: @user.email).count).to eq 1
+        end
+      end
+
+      context "a profile with the user's email does not already exist" do
+        before do
+          @user = FactoryGirl.build :valid_user, email: 'user@example.com'
+          @user.save
+          @user.reload
+        end
+
+        it "creates a new linked profile with the user's email" do
+          expect(@user.profile.email).to eq @user.email
+        end
+      end
     end
   end
 end
