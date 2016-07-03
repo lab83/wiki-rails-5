@@ -10,6 +10,6 @@ RSpec.describe Profile, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many :revisions }
-    it { is_expected.to have_one :user }
+    it { is_expected.to have_one(:user).dependent(:destroy) }
   end
 end
