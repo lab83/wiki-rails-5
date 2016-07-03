@@ -13,6 +13,7 @@ end
 
 group :development, :test do
   gem 'byebug', '~> 9.0.5', platform: :mri
+  gem 'dotenv-rails', '~> 2.1.1'
   gem 'rspec-rails', '~> 3.5.0'
 end
 
