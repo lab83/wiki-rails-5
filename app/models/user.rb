@@ -7,8 +7,6 @@ class User < ApplicationRecord
 
   belongs_to :profile, optional: true
 
-  after_save :create_or_link_profile
-
   private
 
   def create_or_link_profile
