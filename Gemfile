@@ -23,7 +23,7 @@ group :test do
   gem 'shoulda-matchers', '~> 3.1.1'
 end
 
-gem 'devise', '~> 4.2.0'
+gem 'clearance', '~> 1.14.1'
 gem 'jquery-rails', '~> 4.1.1'
 gem 'pundit', '~> 1.1.0'
 gem 'sass-rails', '~> 5.0.5'
