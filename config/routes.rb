@@ -8,9 +8,9 @@ Rails.application.routes.draw do
       only: [:create, :edit, :update]
   end
 
-  get "/log-in" => "clearance/sessions#new", as: "log_in"
-  delete "/log-out" => "clearance/sessions#destroy", as: "log_out"
-  get "/register" => "clearance/users#new", as: "register"
+  get "/log-in" => "clearance/sessions#new", as: "sign_in"
+  delete "/log-out" => "clearance/sessions#destroy", as: "sign_out"
+  get "/register" => "clearance/users#new", as: "sign_up"
 
   resources :revisions
   resources :pages

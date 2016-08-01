@@ -3,8 +3,8 @@
 <ul>
   <% if signed_in? %>
     <li>Welcome <%= current_user.email %>.</li>
-    <li><%= link_to 'Log Out', log_out_path, method: :delete %></li>
+    <li><%= link_to 'Log Out', sign_out_path, method: :delete %></li>
   <% else %>
-    <li><%= link_to 'Log In', log_in_path %></li>
+    <li><%= link_to 'Log In', sign_in_path %></li>
   <% end %>
 </ul>
